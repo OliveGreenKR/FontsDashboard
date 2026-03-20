@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<!-- All Google Fonts in one request -->
-<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Bad+Script&family=Caveat:wght@400;700&family=Chakra+Petch:wght@400;700&family=Comfortaa:wght@400;700&family=Gochi+Hand&family=Hachi+Maru+Pop&family=Indie+Flower&family=K2D:wght@400;700&family=Kalam:wght@400;700&family=Kanit:wght@400;700&family=Kosugi+Maru&family=Krub:wght@400;700&family=Liu+Jian+Mao+Cao&family=M+PLUS+Rounded+1c:wght@400;700&family=Ma+Shan+Zheng&family=Neucha&family=Noto+Sans+TC&family=Pangolin&family=Patrick+Hand&family=Prompt:wght@400;700&family=Short+Stack&family=Yomogi&family=ZCOOL+KuaiLe&family=ZCOOL+QingKe+HuangYou&family=Zen+Maru+Gothic:wght@400;700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+<!-- All Google Fonts in one request (added Huninn, Iansui) -->
+<link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Bad+Script&family=Caveat:wght@400;700&family=Chakra+Petch:wght@400;700&family=Comfortaa:wght@400;700&family=Gochi+Hand&family=Hachi+Maru+Pop&family=Huninn&family=Iansui&family=Indie+Flower&family=K2D:wght@400;700&family=Kalam:wght@400;700&family=Kanit:wght@400;700&family=Kosugi+Maru&family=Krub:wght@400;700&family=Liu+Jian+Mao+Cao&family=M+PLUS+Rounded+1c:wght@400;700&family=Ma+Shan+Zheng&family=Neucha&family=Noto+Sans+TC&family=Pangolin&family=Patrick+Hand&family=Prompt:wght@400;700&family=Short+Stack&family=Yomogi&family=ZCOOL+KuaiLe&family=ZCOOL+QingKe+HuangYou&family=Zen+Maru+Gothic:wght@400;700&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
 
 <!-- LXGW WenKai TC -->
 <link href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-tc-webfont@1.7.0/style.css" rel="stylesheet">
@@ -29,16 +29,16 @@
   --green: #4ade80;
   --input-bg: #0e0e16;
   --warn: #f59e0b;
+  --warn-bg: rgba(245,158,11,.08);
+  --warn-border: rgba(245,158,11,.2);
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; line-height:1.6; }
 
-/* ── Header ── */
 .header {
   background: linear-gradient(135deg,#1a1740 0%,#2a1d60 50%,#181040 100%);
   padding:44px 24px 32px; text-align:center;
-  border-bottom:1px solid var(--border);
-  position:relative; overflow:hidden;
+  border-bottom:1px solid var(--border); position:relative; overflow:hidden;
 }
 .header::before {
   content:''; position:absolute; inset:-50%; width:200%; height:200%;
@@ -53,11 +53,7 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
   border-radius:8px; font-size:.82rem; color:var(--accent2); position:relative;
 }
 
-/* ── Input area ── */
-.input-area {
-  max-width:760px; margin:-18px auto 0; padding:0 20px;
-  position:relative; z-index:10;
-}
+.input-area { max-width:760px; margin:-18px auto 0; padding:0 20px; position:relative; z-index:10; }
 .input-card {
   background:var(--card); border:1px solid var(--border);
   border-radius:16px; padding:22px 24px;
@@ -79,20 +75,13 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 }
 .btn-translate:hover { background:var(--accent2); }
 .btn-translate:disabled { opacity:.5; cursor:not-allowed; }
-.input-hint {
-  font-size:.75rem; color:var(--dim);
-  display:flex; align-items:center; gap:6px;
-}
+.input-hint { font-size:.75rem; color:var(--dim); display:flex; align-items:center; gap:6px; }
 .src-select {
   background:var(--input-bg); border:1px solid var(--border);
   border-radius:8px; padding:4px 10px; color:var(--text); font-size:.78rem;
 }
-.status-bar {
-  font-size:.78rem; color:var(--warn); min-height:18px; margin-top:2px;
-  transition:opacity .3s;
-}
+.status-bar { font-size:.78rem; color:var(--warn); min-height:18px; margin-top:2px; transition:opacity .3s; }
 
-/* ── Controls ── */
 .controls {
   display:flex; flex-wrap:wrap; align-items:center; justify-content:center;
   gap:16px; padding:22px 20px 4px; max-width:900px; margin:0 auto;
@@ -101,16 +90,13 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 .size-ctrl label { font-size:.78rem; color:var(--dim); }
 .size-ctrl input[type=range] { width:160px; accent-color:var(--accent); }
 .size-val { font-size:.82rem; color:var(--accent2); min-width:36px; }
-
 .view-toggle { display:flex; gap:4px; }
 .view-btn {
   padding:5px 14px; border-radius:8px; border:1px solid var(--border);
-  background:transparent; color:var(--dim); font-size:.78rem; cursor:pointer;
-  transition:all .2s;
+  background:transparent; color:var(--dim); font-size:.78rem; cursor:pointer; transition:all .2s;
 }
 .view-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-/* ── Nav ── */
 .nav { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; padding:16px 20px 6px; max-width:1100px; margin:0 auto; }
 .nav-tab {
   padding:5px 14px; border-radius:18px; font-size:.78rem;
@@ -120,16 +106,13 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 .nav-tab:hover { color:var(--text); border-color:var(--border); }
 .nav-tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
 
-/* ── Main ── */
 .main { max-width:1200px; margin:0 auto; padding:20px; }
 
-/* ── Language section ── */
 .lang-section { margin-bottom:36px; display:none; }
 .lang-section.visible { display:block; }
 .lang-head {
   display:flex; align-items:center; gap:10px;
-  margin-bottom:6px; padding-bottom:10px;
-  border-bottom:1px solid var(--border);
+  margin-bottom:6px; padding-bottom:10px; border-bottom:1px solid var(--border);
 }
 .lang-flag { font-size:1.4rem; }
 .lang-name { font-size:1.15rem; font-weight:600; }
@@ -138,16 +121,13 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
   margin:8px 0 14px; padding:10px 14px;
   background:rgba(124,111,247,.06); border:1px solid rgba(124,111,247,.15);
   border-radius:10px; font-size:.92rem; color:var(--accent2);
-  word-break:break-word; min-height:36px;
-  display:flex; align-items:center; gap:8px;
+  word-break:break-word; min-height:36px; display:flex; align-items:center; gap:8px;
 }
 .translated-text .label { font-size:.7rem; color:var(--dim); flex-shrink:0; }
 
-/* ── Font card ── */
 .font-card {
   background:var(--card); border:1px solid var(--border);
-  border-radius:12px; padding:20px; margin-bottom:12px;
-  transition:border-color .2s;
+  border-radius:12px; padding:20px; margin-bottom:12px; transition:border-color .2s;
 }
 .font-card:hover { border-color:rgba(124,111,247,.35); }
 .font-meta { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:6px; margin-bottom:8px; }
@@ -165,25 +145,28 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 .font-preview {
   padding:14px 16px; background:var(--input-bg); border-radius:10px;
   border:1px solid var(--border); min-height:56px;
-  display:flex; align-items:center; word-break:break-word;
-  transition:font-size .15s;
+  display:flex; align-items:center; word-break:break-word; transition:font-size .15s;
 }
-.font-note { margin-top:6px; font-size:.72rem; color:var(--dim); }
+.font-desc {
+  margin-top:8px; padding:8px 12px; border-radius:8px;
+  font-size:.74rem; line-height:1.5;
+  background:var(--warn-bg); border:1px solid var(--warn-border); color:#d4a853;
+}
+.font-desc.info {
+  background:rgba(124,111,247,.06); border-color:rgba(124,111,247,.15); color:var(--dim);
+}
 
-/* ── Grid view ── */
 .grid-view .font-cards-wrap {
   display:grid; grid-template-columns:repeat(auto-fill,minmax(340px,1fr)); gap:12px;
 }
 .grid-view .font-card { margin-bottom:0; }
 
-/* ── Comparison view (横並び) ── */
 .compare-view .lang-section { display:none !important; }
 .compare-table { display:none; }
 .compare-view .compare-table { display:block; margin-bottom:24px; }
 .compare-table .compare-row {
   display:grid; grid-template-columns:160px 1fr;
-  gap:0; border-bottom:1px solid var(--border);
-  min-height:60px;
+  gap:0; border-bottom:1px solid var(--border); min-height:60px;
 }
 .compare-row .cr-lang {
   display:flex; align-items:center; gap:8px; padding:12px;
@@ -191,23 +174,17 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
   font-size:.82rem; font-weight:600;
 }
 .compare-row .cr-preview {
-  padding:12px 16px; display:flex; align-items:center;
-  word-break:break-word;
+  padding:12px 16px; display:flex; align-items:center; word-break:break-word;
 }
-.compare-head {
-  display:flex; align-items:center; gap:10px;
-  margin-bottom:10px; font-size:1rem; font-weight:600;
-}
+.compare-head { display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:1rem; font-weight:600; }
 .compare-font-select {
   background:var(--input-bg); border:1px solid var(--border);
   border-radius:8px; padding:6px 12px; color:var(--text); font-size:.82rem;
 }
 
-/* ── Footer ── */
 .footer { text-align:center; padding:28px 20px; color:var(--dim); font-size:.76rem; border-top:1px solid var(--border); }
 .footer a { color:var(--accent2); text-decoration:none; }
 
-/* ── Responsive ── */
 @media(max-width:640px) {
   .header h1 { font-size:1.3rem; }
   .input-row { flex-direction:column; }
@@ -216,7 +193,6 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
   .grid-view .font-cards-wrap { grid-template-columns:1fr; }
 }
 
-/* ── Loading spinner ── */
 .spinner { display:inline-block; width:14px; height:14px; border:2px solid var(--dim); border-top-color:var(--accent); border-radius:50%; animation:spin .6s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
 </style>
@@ -265,154 +241,226 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 
 <div class="nav" id="navTabs"></div>
 
-<div class="main" id="mainContent">
-  <!-- Sections rendered by JS -->
-</div>
-<div class="main" id="compareContent" style="display:none;">
-  <!-- Comparison view rendered by JS -->
-</div>
+<div class="main" id="mainContent"></div>
+<div class="main" id="compareContent" style="display:none;"></div>
 
 <div class="footer">
-  <p>All fonts are free for commercial use. Always verify the license on the source site before production use.</p>
+  <p>All fonts are free for commercial use (SIL OFL 1.1 or Apache 2.0). Always verify the license on the source site before production use.</p>
   <p style="margin-top:6px;">Built for team review · Deploy via <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
 </div>
 
 <script>
 // ═══════════════════════════════════════
-// DATA
+// DATA — desc = warnings for game localization / rendering
 // ═══════════════════════════════════════
 const LANGS = [
   { lang:"English", code:"en", flag:"🇺🇸", transCode:"en",
     defaultText:"The quick brown fox jumps over the lazy dog",
     fonts:[
-      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand" },
-      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute","Whimsical"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower" },
-      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful","Cartoonish"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand" },
-      { name:"Short Stack", family:"'Short Stack',cursive", tags:["Chunky","Childlike"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Short+Stack" },
-      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual","Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat" }
+      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand",
+        desc:"info:latin + latin-ext 지원. 라틴 계열 전 언어 호환. 게임 UI 본문/대사 모두 적합." },
+      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute","Whimsical"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower",
+        desc:"info:latin + latin-ext. 60개 언어 지원. 경쾌한 느낌으로 캐주얼 게임에 적합." },
+      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful","Cartoonish"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand",
+        desc:"info:latin subset만 제공 (latin-ext 없음). 영어/스페인어/독어/이탈리아어 등 기본 라틴 문자는 정상 지원." },
+      { name:"Short Stack", family:"'Short Stack',cursive", tags:["Chunky","Childlike"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Short+Stack",
+        desc:"info:latin subset만 제공. 기본 서유럽 문자 지원. 터키어 전용 문자(ş,ğ,ı) 미지원으로 TR에는 미배정." },
+      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual","Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat",
+        desc:"info:latin + latin-ext + cyrillic. 글자마다 3가지 변형(contextual alternates)으로 자연스러운 손글씨 느낌. 매우 넓은 언어 커버리지." }
     ]},
+
   { lang:"Chinese (Simplified)", code:"zh-CN", flag:"🇨🇳", transCode:"zh-CN",
     defaultText:"你好世界，这是一段中文示例文字",
     fonts:[
-      { name:"ZCOOL KuaiLe 站酷快乐体", family:"'ZCOOL KuaiLe',sans-serif", tags:["Cheerful","Pop"], src:"Google Fonts", url:"https://fonts.google.com/specimen/ZCOOL+KuaiLe" },
-      { name:"Ma Shan Zheng 马善政", family:"'Ma Shan Zheng',cursive", tags:["Brush","Calligraphy"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Ma+Shan+Zheng" },
-      { name:"ZCOOL QingKe HuangYou", family:"'ZCOOL QingKe HuangYou',sans-serif", tags:["Rounded","Soft"], src:"Google Fonts", url:"https://fonts.google.com/specimen/ZCOOL+QingKe+HuangYou" },
-      { name:"Liu Jian Mao Cao", family:"'Liu Jian Mao Cao',cursive", tags:["Handwritten","Grass"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Liu+Jian+Mao+Cao" },
-      { name:"Zhi Mang Xing", family:"'Zhi Mang Xing',cursive", tags:["Running Script"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Zhi+Mang+Xing" }
+      { name:"ZCOOL KuaiLe 站酷快乐体", family:"'ZCOOL KuaiLe',sans-serif", tags:["Cheerful","Pop"], src:"Google Fonts", url:"https://fonts.google.com/specimen/ZCOOL+KuaiLe",
+        desc:"info:ZCOOL 공식 사이트에서 '永久免费授权全社会使用(包括商用)' 명시. Google Fonts에 SIL OFL 1.1로 등재. 상업 사용 가능." },
+      { name:"Ma Shan Zheng 马善政", family:"'Ma Shan Zheng',cursive", tags:["Brush","Calligraphy"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Ma+Shan+Zheng",
+        desc:"warn:붓글씨(毛笔) 서체. 작은 크기(12px 이하)에서 가독성 저하. 게임 UI 본문보다는 타이틀/컷씬 대사에 적합." },
+      { name:"ZCOOL QingKe HuangYou", family:"'ZCOOL QingKe HuangYou',sans-serif", tags:["Rounded","Soft"], src:"Google Fonts", url:"https://fonts.google.com/specimen/ZCOOL+QingKe+HuangYou",
+        desc:"info:ZCOOL 공식 '免费商用' 확인 완료. SIL OFL 1.1. 둥글고 부드러운 스타일. 제목/강조용에 특히 적합." },
+      { name:"Liu Jian Mao Cao", family:"'Liu Jian Mao Cao',cursive", tags:["Handwritten","Grass Script"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Liu+Jian+Mao+Cao",
+        desc:"warn:초서(草書) 스타일. 장문 텍스트에서 가독성 매우 낮음. 게임 내 제목/로고/편지 연출 등 제한적 용도 권장." },
+      { name:"Zhi Mang Xing", family:"'Zhi Mang Xing',cursive", tags:["Running Script"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Zhi+Mang+Xing",
+        desc:"warn:행서(行書) 스타일. 장문 가독성 제한적. 게임 내 강조 문구/제목용으로 권장. 본문에는 비추천." }
     ]},
+
   { lang:"Chinese (Traditional)", code:"zh-TW", flag:"🇹🇼", transCode:"zh-TW",
     defaultText:"你好世界，這是一段繁體中文範例文字",
     fonts:[
-      { name:"LXGW WenKai TC 霞鶩文楷", family:"'LXGW WenKai TC',serif", tags:["Handwritten","Elegant"], src:"GitHub", url:"https://github.com/lxgw/LxgwWenKai-TC" },
-      { name:"LXGW WenKai 霞鶩文楷", family:"'LXGW WenKai',serif", tags:["Handwritten","Warm"], src:"GitHub", url:"https://github.com/lxgw/LxgwWenKai" },
-      { name:"Noto Sans TC", family:"'Noto Sans TC',sans-serif", tags:["Clean","Universal"], src:"Google Fonts", url:"https://fonts.google.com/noto/specimen/Noto+Sans+TC" },
-      { name:"ZCOOL KuaiLe", family:"'ZCOOL KuaiLe',sans-serif", tags:["Cheerful","Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/ZCOOL+KuaiLe" }
+      { name:"LXGW WenKai TC 霞鶩文楷", family:"'LXGW WenKai TC',serif", tags:["Handwritten","Elegant"], src:"GitHub", url:"https://github.com/lxgw/LxgwWenKai-TC",
+        desc:"info:繁體中文 전용 빌드. 楷書(해서) 기반 손글씨. 가독성 우수. 게임 본문/대사 모두 적합. jsDelivr CDN으로 웹 로딩." },
+      { name:"Huninn 粉圓", family:"'Huninn',sans-serif", tags:["Rounded","Cute","Taiwan"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Huninn",
+        desc:"info:justfont 제작, 대만 전용 둥근 고딕. Kosugi Maru 기반 + 대만 상용 한자/주음부호/대만어 포함. 귀여운 게임에 매우 적합." },
+      { name:"Iansui 芫荽", family:"'Iansui',serif", tags:["Pen","Handwritten","Taiwan"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Iansui",
+        desc:"info:Klee One 기반, 대만 교육부 서체 규격 준수. 펜글씨 스타일. TW/HK/MO 사용의 95% 커버. 교육/아동 게임에 특히 적합." },
+      { name:"Noto Sans TC", family:"'Noto Sans TC',sans-serif", tags:["Clean","Universal"], src:"Google Fonts", url:"https://fonts.google.com/noto/specimen/Noto+Sans+TC",
+        desc:"info:표준 고딕체 (손글씨 스타일 아님). 繁體 글리프 커버리지 완벽(7,800+ 한자). 레퍼런스 스타일과 다르지만 폴백 폰트로 활용 가치 높음." }
     ]},
+
   { lang:"Spanish", code:"es", flag:"🇪🇸", transCode:"es",
     defaultText:"El rápido zorro marrón salta sobre el perro perezoso",
     fonts:[
-      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand" },
-      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute","Whimsical"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower" },
-      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand" },
-      { name:"Kalam", family:"'Kalam',cursive", tags:["Penmanship","Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam" },
-      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat" }
+      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand",
+        desc:"info:ñ, á, é, í, ó, ú 등 스페인어 특수문자 완벽 지원." },
+      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute","Whimsical"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower",
+        desc:"info:latin-ext 포함. 스페인어 전 문자 지원." },
+      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand",
+        desc:"info:ñ은 Latin-1 Supplement(U+00F1)에 포함되어 정상 렌더링." },
+      { name:"Kalam", family:"'Kalam',cursive", tags:["Penmanship","Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam",
+        desc:"info:latin + latin-ext + devanagari. 스페인어 완벽 지원. 따뜻한 펜글씨 느낌." },
+      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat",
+        desc:"info:광범위한 언어 지원. 스페인어 문제 없음." }
     ]},
+
   { lang:"French", code:"fr", flag:"🇫🇷", transCode:"fr",
     defaultText:"Le vif renard brun saute par-dessus le chien paresseux",
     fonts:[
-      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand" },
-      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower" },
-      { name:"Architects Daughter", family:"'Architects Daughter',cursive", tags:["Sketch","Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Architects+Daughter" },
-      { name:"Short Stack", family:"'Short Stack',cursive", tags:["Chunky"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Short+Stack" },
-      { name:"Kalam", family:"'Kalam',cursive", tags:["Penmanship"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam" }
+      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand",
+        desc:"info:é, è, ê, ë, à, â, ç, ù, î, ô 등 프랑스어 악센트 완벽 지원." },
+      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower",
+        desc:"info:latin-ext 포함. 프랑스어 전 문자 지원." },
+      { name:"Architects Daughter", family:"'Architects Daughter',cursive", tags:["Sketch","Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Architects+Daughter",
+        desc:"info:Latin Extended-A 포함. 건축가 손글씨 스타일. 프랑스어 정상 지원." },
+      { name:"Short Stack", family:"'Short Stack',cursive", tags:["Chunky"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Short+Stack",
+        desc:"info:프랑스어 악센트(é,è,ê,ç 등)는 Latin-1 Supplement에 포함되어 정상 렌더링." },
+      { name:"Kalam", family:"'Kalam',cursive", tags:["Penmanship"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam",
+        desc:"info:latin-ext 포함. 프랑스어 문제 없음." }
     ]},
+
   { lang:"Portuguese (Brazil)", code:"pt-BR", flag:"🇧🇷", transCode:"pt",
     defaultText:"A rápida raposa marrom pula sobre o cachorro preguiçoso",
     fonts:[
-      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand" },
-      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower" },
-      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand" },
-      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat" },
-      { name:"Kalam", family:"'Kalam',cursive", tags:["Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam" }
+      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand",
+        desc:"info:à, á, â, ã, é, ê, í, ó, ô, ú, ç 등 포르투갈어 문자 완벽 지원." },
+      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower",
+        desc:"info:latin-ext. 포르투갈어 전 문자 지원." },
+      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand",
+        desc:"info:PT 악센트는 모두 Latin-1에 포함. 정상 렌더링." },
+      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat",
+        desc:"info:광범위한 언어 지원. 포르투갈어 문제 없음." },
+      { name:"Kalam", family:"'Kalam',cursive", tags:["Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam",
+        desc:"info:latin-ext 포함. 포르투갈어 완벽 지원." }
     ]},
+
   { lang:"Portuguese (Portugal)", code:"pt-PT", flag:"🇵🇹", transCode:"pt",
     defaultText:"A rápida raposa castanha salta por cima do cão preguiçoso",
     fonts:[
-      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand" },
-      { name:"Short Stack", family:"'Short Stack',cursive", tags:["Chunky"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Short+Stack" },
-      { name:"Architects Daughter", family:"'Architects Daughter',cursive", tags:["Sketch"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Architects+Daughter" },
-      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower" },
-      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat" }
+      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand",
+        desc:"info:포르투갈어(유럽) 문자 완벽 지원." },
+      { name:"Short Stack", family:"'Short Stack',cursive", tags:["Chunky"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Short+Stack",
+        desc:"info:PT 악센트 Latin-1 포함. 정상 렌더링." },
+      { name:"Architects Daughter", family:"'Architects Daughter',cursive", tags:["Sketch"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Architects+Daughter",
+        desc:"info:Latin Extended-A 포함. 포르투갈어 정상 지원." },
+      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower",
+        desc:"info:latin-ext 포함." },
+      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat",
+        desc:"info:포르투갈어 문제 없음." }
     ]},
+
   { lang:"Russian", code:"ru", flag:"🇷🇺", transCode:"ru",
     defaultText:"Быстрая коричневая лиса прыгает через ленивую собаку",
     fonts:[
-      { name:"Neucha", family:"'Neucha',cursive", tags:["Handwritten","Cyrillic"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Neucha" },
-      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual","Cyrillic"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat" },
-      { name:"Comfortaa", family:"'Comfortaa',sans-serif", tags:["Rounded","Geometric"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Comfortaa" },
-      { name:"Pangolin", family:"'Pangolin',cursive", tags:["Friendly","Cyrillic"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Pangolin" },
-      { name:"Bad Script", family:"'Bad Script',cursive", tags:["Script","Cursive"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Bad+Script" }
+      { name:"Neucha", family:"'Neucha',cursive", tags:["Handwritten","Cyrillic"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Neucha",
+        desc:"info:cyrillic + latin. 자연스러운 러시아어 손글씨. 게임 대사/UI 모두 적합." },
+      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual","Cyrillic"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat",
+        desc:"info:cyrillic + latin + latin-ext. 키릴 문자별 3가지 변형 지원. 매우 자연스러운 러시아어 렌더링." },
+      { name:"Comfortaa", family:"'Comfortaa',sans-serif", tags:["Rounded","Geometric"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Comfortaa",
+        desc:"warn:Cyrillic 지원하나 г,д,и,й,п,т 등이 기하학적으로 변형된 형태. 러시아 네이티브 사용자에게 이질감을 줄 수 있음. 게임 현지화 시 러시아 QA 검수 권장." },
+      { name:"Pangolin", family:"'Pangolin',cursive", tags:["Friendly","Cyrillic"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Pangolin",
+        desc:"info:cyrillic + cyrillic-ext + latin + latin-ext. 73개 언어 지원. 친근한 손글씨. 캐주얼 게임에 적합." },
+      { name:"Bad Script", family:"'Bad Script',cursive", tags:["Script","Cursive"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Bad+Script",
+        desc:"info:cyrillic + latin. 필기체 스타일. 가독성은 좋으나 장문에서는 읽기 피로감 있을 수 있음." }
     ]},
+
   { lang:"German", code:"de", flag:"🇩🇪", transCode:"de",
     defaultText:"Der schnelle braune Fuchs springt über den faulen Hund",
     fonts:[
-      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand" },
-      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower" },
-      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand" },
-      { name:"Architects Daughter", family:"'Architects Daughter',cursive", tags:["Sketch"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Architects+Daughter" },
-      { name:"Kalam", family:"'Kalam',cursive", tags:["Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam" }
+      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand",
+        desc:"info:ö, ü, ä, ß 등 독일어 특수문자 완벽 지원 (Latin-1 Supplement)." },
+      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower",
+        desc:"info:latin-ext. 독일어 전 문자 지원." },
+      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand",
+        desc:"info:ö,ü,ä,ß 모두 Latin-1에 포함. 정상 렌더링." },
+      { name:"Architects Daughter", family:"'Architects Daughter',cursive", tags:["Sketch"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Architects+Daughter",
+        desc:"info:Latin Extended-A 포함. 독일어 정상 지원." },
+      { name:"Kalam", family:"'Kalam',cursive", tags:["Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam",
+        desc:"info:latin-ext 포함. 독일어 완벽 지원." }
     ]},
+
   { lang:"Japanese", code:"ja", flag:"🇯🇵", transCode:"ja",
     defaultText:"いろはにほへと ちりぬるを わかよたれそ",
     fonts:[
-      { name:"Hachi Maru Pop はちまるポップ", family:"'Hachi Maru Pop',cursive", tags:["Cute","Pop"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Hachi+Maru+Pop" },
-      { name:"Yomogi よもぎ", family:"'Yomogi',cursive", tags:["Handwritten","Soft"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Yomogi" },
-      { name:"Zen Maru Gothic", family:"'Zen Maru Gothic',sans-serif", tags:["Rounded","Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Zen+Maru+Gothic" },
-      { name:"Kosugi Maru 小杉丸", family:"'Kosugi Maru',sans-serif", tags:["Rounded","Friendly"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kosugi+Maru" },
-      { name:"M PLUS Rounded 1c", family:"'M PLUS Rounded 1c',sans-serif", tags:["Rounded","Clean"], src:"Google Fonts", url:"https://fonts.google.com/specimen/M+PLUS+Rounded+1c" }
+      { name:"Hachi Maru Pop はちまるポップ", family:"'Hachi Maru Pop',cursive", tags:["Cute","Pop"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Hachi+Maru+Pop",
+        desc:"warn:Joyo漢字 3자(填,剥,頬) 미지원 — 2010년 추가분. 일반 게임 텍스트에서는 거의 문제없으나, 해당 한자 사용 시 폴백 발생." },
+      { name:"Yomogi よもぎ", family:"'Yomogi',cursive", tags:["Handwritten","Soft"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Yomogi",
+        desc:"warn:반복 기호 々 미지원. '人々','時々' 등의 게임 텍스트에서 폴백 발생 가능. 그 외 Joyo漢字 완벽." },
+      { name:"Zen Maru Gothic", family:"'Zen Maru Gothic',sans-serif", tags:["Rounded","Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Zen+Maru+Gothic",
+        desc:"warn:Joyo漢字 3자(填,剥,頬) 미지원. 둥근 고딕으로 가독성 우수. 게임 UI/본문 모두 적합." },
+      { name:"Kosugi Maru 小杉丸", family:"'Kosugi Maru',sans-serif", tags:["Rounded","Friendly"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kosugi+Maru",
+        desc:"warn:Joyo漢字 3자(填,剥,頬) 미지원. MOTOYA 개발, Apache 2.0 라이선스. 둥근 형태로 귀여운 느낌." },
+      { name:"M PLUS Rounded 1c", family:"'M PLUS Rounded 1c',sans-serif", tags:["Rounded","Clean"], src:"Google Fonts", url:"https://fonts.google.com/specimen/M+PLUS+Rounded+1c",
+        desc:"info:8,546 글리프로 가장 넓은 커버리지. Joyo漢字 포함 대부분의 한자 지원. 게임 현지화에 가장 안전한 선택." }
     ]},
+
   { lang:"Turkish", code:"tr", flag:"🇹🇷", transCode:"tr",
     defaultText:"Pijamalı hasta yağız şoföre çabucak güvendi",
     fonts:[
-      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand" },
-      { name:"Kalam", family:"'Kalam',cursive", tags:["Penmanship","Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam" },
-      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat" },
-      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower" },
-      { name:"Architects Daughter", family:"'Architects Daughter',cursive", tags:["Sketch"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Architects+Daughter" }
+      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand",
+        desc:"info:latin-ext 포함. ş,ğ,ı,İ,ç,ö,ü 터키어 전용 문자 완벽 지원." },
+      { name:"Kalam", family:"'Kalam',cursive", tags:["Penmanship","Warm"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kalam",
+        desc:"info:latin-ext 포함. 터키어 완벽 지원." },
+      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat",
+        desc:"info:latin-ext 포함. 터키어 완벽 지원." },
+      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower",
+        desc:"info:latin-ext 포함. 터키어 완벽 지원." },
+      { name:"Architects Daughter", family:"'Architects Daughter',cursive", tags:["Sketch"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Architects+Daughter",
+        desc:"info:Latin Extended-A(U+0100-017F) 포함. 터키어 특수문자 확인됨." }
     ]},
+
   { lang:"Thai", code:"th", flag:"🇹🇭", transCode:"th",
     defaultText:"สวัสดีครับ นี่คือตัวอย่างข้อความภาษาไทย",
     fonts:[
-      { name:"Krub", family:"'Krub',sans-serif", tags:["Cute","Rounded","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Krub" },
-      { name:"K2D", family:"'K2D',sans-serif", tags:["Modern","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/K2D" },
-      { name:"Chakra Petch", family:"'Chakra Petch',sans-serif", tags:["Looped","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Chakra+Petch" },
-      { name:"Kanit", family:"'Kanit',sans-serif", tags:["Modern","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kanit" },
-      { name:"Prompt", family:"'Prompt',sans-serif", tags:["Friendly","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Prompt" }
+      { name:"Krub", family:"'Krub',sans-serif", tags:["Rounded","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Krub",
+        desc:"info:thai + latin + latin-ext. 둥근 형태로 이 그룹 중 가장 귀여운 느낌. 게임 UI 적합." },
+      { name:"K2D", family:"'K2D',sans-serif", tags:["Modern","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/K2D",
+        desc:"info:thai + latin + latin-ext. 뾰족한 끝 처리의 모던 스타일. 캐주얼/액션 게임 적합." },
+      { name:"Chakra Petch", family:"'Chakra Petch',sans-serif", tags:["Looped","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Chakra+Petch",
+        desc:"info:thai + latin + latin-ext. 루프형(วนเวียน) 태국 문자. 기하학적 느낌." },
+      { name:"Kanit", family:"'Kanit',sans-serif", tags:["Modern","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Kanit",
+        desc:"info:thai + latin + latin-ext. 루프리스(ไม่มีหัว) 스타일. 모던하고 깔끔. 태국 현지에서 인기 높음." },
+      { name:"Prompt", family:"'Prompt',sans-serif", tags:["Friendly","Thai"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Prompt",
+        desc:"info:thai + latin + latin-ext. 친근한 산세리프. Google Fonts 태국어 중 가독성 최상급. ※ 참고: 태국어 손글씨 웹폰트는 Google Fonts에 거의 없어 모던 산세리프가 현실적 최선." }
     ]},
+
   { lang:"Italian", code:"it", flag:"🇮🇹", transCode:"it",
     defaultText:"La rapida volpe marrone salta sopra il cane pigro",
     fonts:[
-      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand" },
-      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower" },
-      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand" },
-      { name:"Short Stack", family:"'Short Stack',cursive", tags:["Chunky"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Short+Stack" },
-      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat" }
+      { name:"Patrick Hand", family:"'Patrick Hand',cursive", tags:["Handwritten","Rounded"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Patrick+Hand",
+        desc:"info:à,è,é,ì,ò,ù 등 이탈리아어 악센트 완벽 지원 (Latin-1)." },
+      { name:"Indie Flower", family:"'Indie Flower',cursive", tags:["Cute"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Indie+Flower",
+        desc:"info:latin-ext. 이탈리아어 전 문자 지원." },
+      { name:"Gochi Hand", family:"'Gochi Hand',cursive", tags:["Playful"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Gochi+Hand",
+        desc:"info:IT 악센트 모두 Latin-1 포함. 정상 렌더링." },
+      { name:"Short Stack", family:"'Short Stack',cursive", tags:["Chunky"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Short+Stack",
+        desc:"info:IT 악센트 Latin-1 포함. 정상 렌더링." },
+      { name:"Caveat", family:"'Caveat',cursive", tags:["Casual"], src:"Google Fonts", url:"https://fonts.google.com/specimen/Caveat",
+        desc:"info:이탈리아어 문제 없음." }
     ]}
 ];
 
 // ═══════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════
-let translations = {};   // { code: "translated text" }
+let translations = {};
 let currentLang = 'all';
 let currentSize = 36;
-let currentView = 'list'; // list | grid | compare
+let currentView = 'list';
 
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 
 // ═══════════════════════════════════════
-// TRANSLATION (MyMemory API — free, CORS OK)
+// TRANSLATION (MyMemory API)
 // ═══════════════════════════════════════
 async function translateText(text, srcLang, tgtLang) {
   const sl = srcLang === 'auto' ? '' : srcLang;
@@ -421,9 +469,7 @@ async function translateText(text, srcLang, tgtLang) {
   try {
     const r = await fetch(url);
     const d = await r.json();
-    if (d.responseStatus === 200 && d.responseData) {
-      return d.responseData.translatedText;
-    }
+    if (d.responseStatus === 200 && d.responseData) return d.responseData.translatedText;
     return null;
   } catch { return null; }
 }
@@ -437,34 +483,25 @@ async function translateAll(text) {
   status.textContent = 'Translating to 13 languages…';
   translations = {};
 
-  // Translate in batches of 4 to avoid rate limits
   const batches = [];
-  for (let i = 0; i < LANGS.length; i += 4) {
-    batches.push(LANGS.slice(i, i + 4));
-  }
+  for (let i = 0; i < LANGS.length; i += 4) batches.push(LANGS.slice(i, i + 4));
 
   let done = 0;
   for (const batch of batches) {
     const results = await Promise.all(
-      batch.map(async (l) => {
-        const t = await translateText(text, srcLang, l.transCode);
-        return { code: l.code, text: t };
-      })
+      batch.map(async l => ({ code: l.code, text: await translateText(text, srcLang, l.transCode) }))
     );
-    results.forEach(r => {
-      if (r.text) translations[r.code] = r.text;
-    });
+    results.forEach(r => { if (r.text) translations[r.code] = r.text; });
     done += batch.length;
     status.textContent = `Translated ${Math.min(done, LANGS.length)} / ${LANGS.length}…`;
   }
 
-  // pt-BR and pt-PT share transCode "pt" — show same result for both
   if (translations['pt-BR'] && !translations['pt-PT']) translations['pt-PT'] = translations['pt-BR'];
   if (translations['pt-PT'] && !translations['pt-BR']) translations['pt-BR'] = translations['pt-PT'];
 
   btn.disabled = false;
   btn.textContent = 'Translate';
-  status.textContent = `Done! Showing translations for "${text}"`;
+  status.textContent = `Done! "${text}"`;
   setTimeout(() => { status.textContent = ''; }, 4000);
 
   updatePreviews();
@@ -472,7 +509,7 @@ async function translateAll(text) {
 }
 
 // ═══════════════════════════════════════
-// RENDER — List / Grid
+// RENDER
 // ═══════════════════════════════════════
 function buildSections() {
   const main = $('#mainContent');
@@ -491,6 +528,10 @@ function buildSections() {
     html += `<div class="font-cards-wrap">`;
     section.fonts.forEach(font => {
       const tags = font.tags.map(t => `<span class="font-tag">${t}</span>`).join('');
+      const isWarn = font.desc && font.desc.startsWith('warn:');
+      const descClass = isWarn ? 'font-desc' : 'font-desc info';
+      const descIcon = isWarn ? '⚠️' : 'ℹ️';
+      const descText = font.desc ? font.desc.replace(/^(warn:|info:)/, '') : '';
       html += `<div class="font-card">
         <div class="font-meta">
           <span class="font-name">${font.name}</span>
@@ -503,6 +544,7 @@ function buildSections() {
              data-lang="${section.code}" data-default="${section.defaultText}">
           ${section.defaultText}
         </div>
+        ${descText ? `<div class="${descClass}">${descIcon} ${descText}</div>` : ''}
       </div>`;
     });
     html += `</div></div>`;
@@ -510,15 +552,9 @@ function buildSections() {
   main.innerHTML = html;
 }
 
-// ═══════════════════════════════════════
-// RENDER — Compare view
-// ═══════════════════════════════════════
 function buildCompareView() {
   const wrap = $('#compareContent');
-  // Build a font selector per language group
   let html = '<div class="compare-head">Compare: one font per language, side by side</div>';
-
-  // Font selector
   html += `<div style="margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
     <span style="font-size:.82rem;color:var(--dim);">Font preference:</span>
     <select class="compare-font-select" id="compareFontIdx">
@@ -529,11 +565,9 @@ function buildCompareView() {
       <option value="4">5th font</option>
     </select>
   </div>`;
-
   html += `<div class="compare-table" style="display:block;border:1px solid var(--border);border-radius:12px;overflow:hidden;">`;
   LANGS.forEach(section => {
-    const fi = 0;
-    const font = section.fonts[fi] || section.fonts[0];
+    const font = section.fonts[0];
     html += `<div class="compare-row" data-lang="${section.code}">
       <div class="cr-lang">${section.flag} ${section.code}</div>
       <div class="cr-preview" style="font-family:${font.family};font-size:${currentSize}px;"
@@ -544,8 +578,6 @@ function buildCompareView() {
   });
   html += `</div>`;
   wrap.innerHTML = html;
-
-  // Font index change
   $('#compareFontIdx').addEventListener('change', () => updateCompareView());
 }
 
@@ -558,19 +590,14 @@ function updateCompareView() {
     const preview = row.querySelector('.cr-preview');
     preview.style.fontFamily = font.family;
     preview.style.fontSize = currentSize + 'px';
-    const text = translations[code] || section.defaultText;
-    preview.textContent = text;
+    preview.textContent = translations[code] || section.defaultText;
   });
 }
 
-// ═══════════════════════════════════════
-// UPDATE
-// ═══════════════════════════════════════
 function updatePreviews() {
   $$('.font-preview').forEach(el => {
     const code = el.dataset.lang;
-    const text = translations[code] || el.dataset.default;
-    el.textContent = text;
+    el.textContent = translations[code] || el.dataset.default;
     el.style.fontSize = currentSize + 'px';
   });
   $$('.translated-text').forEach(el => {
@@ -597,15 +624,10 @@ function setView(view) {
   else { main.style.display=''; compare.style.display='none'; }
 }
 
-// ═══════════════════════════════════════
-// NAV
-// ═══════════════════════════════════════
 function buildNav() {
   const nav = $('#navTabs');
   let html = '<div class="nav-tab active" data-lang="all">All</div>';
-  LANGS.forEach(s => {
-    html += `<div class="nav-tab" data-lang="${s.code}">${s.flag} ${s.code.toUpperCase()}</div>`;
-  });
+  LANGS.forEach(s => { html += `<div class="nav-tab" data-lang="${s.code}">${s.flag} ${s.code.toUpperCase()}</div>`; });
   nav.innerHTML = html;
   nav.addEventListener('click', e => {
     const tab = e.target.closest('.nav-tab');
@@ -617,9 +639,7 @@ function buildNav() {
   });
 }
 
-// ═══════════════════════════════════════
-// EVENTS
-// ═══════════════════════════════════════
+// Events
 $('#btnTranslate').addEventListener('click', () => {
   const text = $('#globalInput').value.trim();
   if (!text) return;
@@ -636,9 +656,7 @@ $('#fontSizeSlider').addEventListener('input', () => {
 });
 $$('.view-btn').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
 
-// ═══════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════
+// Init
 buildNav();
 buildSections();
 buildCompareView();
