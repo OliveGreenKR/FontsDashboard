@@ -196,6 +196,46 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 .spinner { display:inline-block; width:14px; height:14px; border:2px solid var(--dim); border-top-color:var(--accent); border-radius:50%; animation:spin .6s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
 
+/* Checkbox selection */
+.font-check { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.font-check input[type=checkbox] { width:18px; height:18px; accent-color:var(--accent); cursor:pointer; flex-shrink:0; }
+.font-check label { font-size:.78rem; color:var(--dim); cursor:pointer; user-select:none; }
+.select-all-wrap { display:flex; align-items:center; gap:8px; margin-left:auto; }
+.select-all-wrap input[type=checkbox] { width:16px; height:16px; accent-color:var(--accent); cursor:pointer; }
+.select-all-wrap label { font-size:.74rem; color:var(--dim); cursor:pointer; user-select:none; }
+
+/* Floating action bar */
+.action-bar {
+  position:fixed; bottom:0; left:0; right:0; z-index:100;
+  background:var(--surface); border-top:1px solid var(--accent);
+  padding:12px 24px; display:flex; align-items:center; justify-content:center; gap:12px;
+  transform:translateY(100%); transition:transform .3s ease;
+  box-shadow:0 -4px 24px rgba(0,0,0,.5);
+}
+.action-bar.visible { transform:translateY(0); }
+.action-bar .bar-count { font-size:.88rem; color:var(--accent2); font-weight:600; }
+.bar-btn {
+  padding:7px 20px; border-radius:8px; border:none;
+  font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s;
+}
+.bar-btn.primary { background:var(--accent); color:#fff; }
+.bar-btn.primary:hover { background:var(--accent2); }
+.bar-btn.secondary { background:transparent; color:var(--accent2); border:1px solid var(--border); }
+.bar-btn.secondary:hover { border-color:var(--accent); }
+.bar-btn.ghost { background:transparent; color:var(--dim); border:1px solid var(--border); }
+.bar-btn.ghost:hover { color:var(--text); border-color:var(--accent); }
+
+/* Selected view */
+.selected-empty { text-align:center; padding:48px 20px; color:var(--dim); font-size:.92rem; }
+.selected-row { display:grid; grid-template-columns:120px 180px 1fr; gap:0; border-bottom:1px solid var(--border); min-height:56px; }
+.selected-row .sr-lang { display:flex; align-items:center; gap:6px; padding:10px 12px; background:var(--surface); border-right:1px solid var(--border); font-size:.8rem; font-weight:600; }
+.selected-row .sr-font { display:flex; align-items:center; padding:10px 12px; font-size:.8rem; color:var(--accent2); border-right:1px solid var(--border); }
+.selected-row .sr-preview { padding:10px 14px; display:flex; align-items:center; word-break:break-word; }
+
+/* CSV export btn in compare view */
+.csv-btn { padding:5px 14px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--accent2); font-size:.78rem; cursor:pointer; transition:all .2s; }
+.csv-btn:hover { background:rgba(124,111,247,.12); border-color:var(--accent); }
+
 </style>
 </head>
 <body>
@@ -237,6 +277,7 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
     <button class="view-btn active" data-view="list">List</button>
     <button class="view-btn" data-view="grid">Grid</button>
     <button class="view-btn" data-view="compare">Compare</button>
+    <button class="view-btn" data-view="selected">Selected</button>
   </div>
 </div>
 
@@ -244,6 +285,14 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 
 <div class="main" id="mainContent"></div>
 <div class="main" id="compareContent" style="display:none;"></div>
+<div class="main" id="selectedContent" style="display:none;"></div>
+
+<div class="action-bar" id="actionBar">
+  <span class="bar-count" id="barCount">0 selected</span>
+  <button class="bar-btn primary" id="btnViewSelected">View Selected</button>
+  <button class="bar-btn secondary" id="btnExportCsv">Export CSV</button>
+  <button class="bar-btn ghost" id="btnClearSel">Clear</button>
+</div>
 
 <div class="footer">
   <p>All fonts are free for commercial use (SIL OFL 1.1 or Apache 2.0). Always verify the license on the source site before production use.</p>
@@ -521,19 +570,30 @@ function buildSections() {
       <span class="lang-flag">${section.flag}</span>
       <span class="lang-name">${section.lang}</span>
       <span class="lang-code">${section.code}</span>
+      <div class="select-all-wrap">
+        <input type="checkbox" id="selAll_${section.code}" data-lang="${section.code}" class="sel-all-cb">
+        <label for="selAll_${section.code}">Select All</label>
+      </div>
     </div>`;
     html += `<div class="translated-text" data-lang="${section.code}">
       <span class="label">Translation:</span>
       <span class="tr-text">${section.defaultText}</span>
     </div>`;
     html += `<div class="font-cards-wrap">`;
-    section.fonts.forEach(font => {
+    section.fonts.forEach((font, fi) => {
       const tags = font.tags.map(t => `<span class="font-tag">${t}</span>`).join('');
       const isWarn = font.desc && font.desc.startsWith('warn:');
       const descClass = isWarn ? 'font-desc' : 'font-desc info';
       const descIcon = isWarn ? '⚠️' : 'ℹ️';
       const descText = font.desc ? font.desc.replace(/^(warn:|info:)/, '') : '';
+      const cbId = `cb_${section.code}_${fi}`;
       html += `<div class="font-card">
+        <div class="font-check">
+          <input type="checkbox" id="${cbId}" class="font-sel-cb"
+                 data-lang="${section.code}" data-font="${font.name}"
+                 data-family="${font.family}" data-src="${font.src}" data-url="${font.url}">
+          <label for="${cbId}">Select</label>
+        </div>
         <div class="font-meta">
           <span class="font-name">${font.name}</span>
           <div class="font-tags"><span class="font-tag free">Free Commercial</span>${tags}</div>
@@ -558,13 +618,14 @@ function buildCompareView() {
   let html = '<div class="compare-head">Compare: one font per language, side by side</div>';
   html += `<div style="margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;">
     <span style="font-size:.82rem;color:var(--dim);">Font preference:</span>
-    <select class="compare-font-select" id="compareFontIdx">
+    <select class="compare-font-select" id="compareFontIdx" style="margin-right:auto;">
       <option value="0">1st font (recommended)</option>
       <option value="1">2nd font</option>
       <option value="2">3rd font</option>
       <option value="3">4th font</option>
       <option value="4">5th font</option>
     </select>
+    <button class="csv-btn" id="btnCompareCsv">Export CSV</button>
   </div>`;
   html += `<div class="compare-table" style="display:block;border:1px solid var(--border);border-radius:12px;overflow:hidden;">`;
   LANGS.forEach(section => {
@@ -619,10 +680,15 @@ function setView(view) {
   $$('.view-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
   const main = $('#mainContent');
   const compare = $('#compareContent');
+  const selected = $('#selectedContent');
   main.classList.remove('grid-view','compare-view');
-  if (view === 'grid') { main.classList.add('grid-view'); main.style.display=''; compare.style.display='none'; }
-  else if (view === 'compare') { main.classList.add('compare-view'); main.style.display='none'; compare.style.display=''; updateCompareView(); }
-  else { main.style.display=''; compare.style.display='none'; }
+  main.style.display = 'none';
+  compare.style.display = 'none';
+  selected.style.display = 'none';
+  if (view === 'grid') { main.classList.add('grid-view'); main.style.display=''; }
+  else if (view === 'compare') { main.classList.add('compare-view'); compare.style.display=''; updateCompareView(); }
+  else if (view === 'selected') { selected.style.display=''; buildSelectedView(); }
+  else { main.style.display=''; }
 }
 
 function buildNav() {
@@ -657,10 +723,118 @@ $('#fontSizeSlider').addEventListener('input', () => {
 });
 $$('.view-btn').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
 
+// ═══════════════════════════════════════
+// SELECTION & CSV
+// ═══════════════════════════════════════
+function getSelectedFonts() {
+  return [...$$('.font-sel-cb:checked')].map(cb => ({
+    lang: LANGS.find(l => l.code === cb.dataset.lang)?.lang || cb.dataset.lang,
+    code: cb.dataset.lang,
+    font: cb.dataset.font,
+    family: cb.dataset.family,
+    src: cb.dataset.src,
+    url: cb.dataset.url
+  }));
+}
+
+function updateActionBar() {
+  const count = $$('.font-sel-cb:checked').length;
+  $('#barCount').textContent = `${count} selected`;
+  $('#actionBar').classList.toggle('visible', count > 0);
+}
+
+function syncSelectAll(langCode) {
+  const allCb = document.getElementById(`selAll_${langCode}`);
+  if (!allCb) return;
+  const cbs = [...$$(`.font-sel-cb[data-lang="${langCode}"]`)];
+  const allChecked = cbs.length > 0 && cbs.every(c => c.checked);
+  const someChecked = cbs.some(c => c.checked);
+  allCb.checked = allChecked;
+  allCb.indeterminate = someChecked && !allChecked;
+}
+
+function buildSelectedView() {
+  const wrap = $('#selectedContent');
+  const sel = getSelectedFonts();
+  if (sel.length === 0) {
+    wrap.innerHTML = '<div class="selected-empty">No fonts selected.<br>Use checkboxes in List/Grid view to select fonts.</div>';
+    return;
+  }
+  let html = '<div class="compare-head">Selected Fonts</div>';
+  html += '<div style="margin-bottom:12px;"><button class="csv-btn" id="btnSelectedCsv">Export CSV</button></div>';
+  html += '<div style="border:1px solid var(--border);border-radius:12px;overflow:hidden;">';
+  sel.forEach(s => {
+    const section = LANGS.find(l => l.code === s.code);
+    const text = translations[s.code] || section?.defaultText || '';
+    html += `<div class="selected-row">
+      <div class="sr-lang">${section?.flag || ''} ${s.code}</div>
+      <div class="sr-font">${s.font}</div>
+      <div class="sr-preview" style="font-family:${s.family};font-size:${currentSize}px;">${text}</div>
+    </div>`;
+  });
+  html += '</div>';
+  wrap.innerHTML = html;
+  document.getElementById('btnSelectedCsv')?.addEventListener('click', () => exportCsv(sel, 'selected-fonts'));
+}
+
+function downloadCsv(csvStr, filename) {
+  const bom = '\uFEFF';
+  const blob = new Blob([bom + csvStr], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename + '.csv';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+function exportCsv(items, filename) {
+  const rows = [['Language', 'Code', 'Font Name', 'Source', 'URL']];
+  items.forEach(i => rows.push([i.lang, i.code, i.font, i.src, i.url]));
+  const csv = rows.map(r => r.map(c => `"${(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+  downloadCsv(csv, filename);
+}
+
+function exportCompareCsv() {
+  const idx = parseInt($('#compareFontIdx')?.value || 0);
+  const items = LANGS.map(section => {
+    const font = section.fonts[Math.min(idx, section.fonts.length - 1)];
+    return { lang: section.lang, code: section.code, font: font.name, src: font.src, url: font.url };
+  });
+  exportCsv(items, 'compare-fonts');
+}
+
+function bindSelectionEvents() {
+  document.addEventListener('change', e => {
+    if (e.target.classList.contains('font-sel-cb')) {
+      syncSelectAll(e.target.dataset.lang);
+      updateActionBar();
+      if (currentView === 'selected') buildSelectedView();
+    }
+    if (e.target.classList.contains('sel-all-cb')) {
+      const lang = e.target.dataset.lang;
+      const checked = e.target.checked;
+      $$(`.font-sel-cb[data-lang="${lang}"]`).forEach(cb => { cb.checked = checked; });
+      updateActionBar();
+      if (currentView === 'selected') buildSelectedView();
+    }
+  });
+
+  $('#btnViewSelected').addEventListener('click', () => setView('selected'));
+  $('#btnExportCsv').addEventListener('click', () => exportCsv(getSelectedFonts(), 'selected-fonts'));
+  $('#btnClearSel').addEventListener('click', () => {
+    $$('.font-sel-cb').forEach(cb => { cb.checked = false; });
+    $$('.sel-all-cb').forEach(cb => { cb.checked = false; cb.indeterminate = false; });
+    updateActionBar();
+    if (currentView === 'selected') buildSelectedView();
+  });
+}
+
 // Init
 buildNav();
 buildSections();
 buildCompareView();
+bindSelectionEvents();
+$('#btnCompareCsv').addEventListener('click', exportCompareCsv);
 </script>
 
 </body>
