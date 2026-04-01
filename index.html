@@ -196,45 +196,6 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 .spinner { display:inline-block; width:14px; height:14px; border:2px solid var(--dim); border-top-color:var(--accent); border-radius:50%; animation:spin .6s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
 
-/* Download checkbox & floating bar */
-.font-check { display:flex; align-items:center; gap:8px; margin-bottom:10px; }
-.font-check input[type=checkbox] {
-  width:18px; height:18px; accent-color:var(--accent); cursor:pointer;
-  flex-shrink:0;
-}
-.font-check label { font-size:.78rem; color:var(--dim); cursor:pointer; user-select:none; }
-.font-check label.disabled { opacity:.45; cursor:not-allowed; }
-
-.select-all-wrap {
-  display:flex; align-items:center; gap:8px; margin-left:auto;
-}
-.select-all-wrap input[type=checkbox] {
-  width:16px; height:16px; accent-color:var(--accent); cursor:pointer;
-}
-.select-all-wrap label { font-size:.74rem; color:var(--dim); cursor:pointer; user-select:none; }
-
-.download-bar {
-  position:fixed; bottom:0; left:0; right:0; z-index:100;
-  background:var(--surface); border-top:1px solid var(--accent);
-  padding:14px 24px; display:flex; align-items:center; justify-content:center; gap:16px;
-  transform:translateY(100%); transition:transform .3s ease;
-  box-shadow:0 -4px 24px rgba(0,0,0,.5);
-}
-.download-bar.visible { transform:translateY(0); }
-.download-bar .dl-count { font-size:.88rem; color:var(--accent2); }
-.download-bar .dl-unique { font-size:.74rem; color:var(--dim); }
-.btn-download {
-  padding:8px 28px; border-radius:10px; border:none;
-  background:var(--accent); color:#fff; font-size:.88rem; font-weight:600;
-  cursor:pointer; transition:background .2s;
-}
-.btn-download:hover { background:var(--accent2); }
-.btn-clear {
-  padding:6px 16px; border-radius:8px; border:1px solid var(--border);
-  background:transparent; color:var(--dim); font-size:.78rem;
-  cursor:pointer; transition:all .2s;
-}
-.btn-clear:hover { color:var(--text); border-color:var(--accent); }
 </style>
 </head>
 <body>
@@ -283,13 +244,6 @@ body { background:var(--bg); color:var(--text); font-family:-apple-system,BlinkM
 
 <div class="main" id="mainContent"></div>
 <div class="main" id="compareContent" style="display:none;"></div>
-
-<div class="download-bar" id="downloadBar">
-  <span class="dl-count" id="dlCount">0 fonts selected</span>
-  <span class="dl-unique" id="dlUnique"></span>
-  <button class="btn-download" id="btnDownload">Download from Google Fonts</button>
-  <button class="btn-clear" id="btnClearSel">Clear</button>
-</div>
 
 <div class="footer">
   <p>All fonts are free for commercial use (SIL OFL 1.1 or Apache 2.0). Always verify the license on the source site before production use.</p>
@@ -567,35 +521,19 @@ function buildSections() {
       <span class="lang-flag">${section.flag}</span>
       <span class="lang-name">${section.lang}</span>
       <span class="lang-code">${section.code}</span>
-      <div class="select-all-wrap">
-        <input type="checkbox" id="selAll_${section.code}" data-lang="${section.code}" class="sel-all-cb">
-        <label for="selAll_${section.code}">Select All</label>
-      </div>
     </div>`;
     html += `<div class="translated-text" data-lang="${section.code}">
       <span class="label">Translation:</span>
       <span class="tr-text">${section.defaultText}</span>
     </div>`;
     html += `<div class="font-cards-wrap">`;
-    section.fonts.forEach((font, fi) => {
+    section.fonts.forEach(font => {
       const tags = font.tags.map(t => `<span class="font-tag">${t}</span>`).join('');
       const isWarn = font.desc && font.desc.startsWith('warn:');
       const descClass = isWarn ? 'font-desc' : 'font-desc info';
       const descIcon = isWarn ? '⚠️' : 'ℹ️';
       const descText = font.desc ? font.desc.replace(/^(warn:|info:)/, '') : '';
-      const isGoogle = font.src === 'Google Fonts';
-      const cbId = `cb_${section.code}_${fi}`;
-      const fontNameEnc = font.name.replace(/\s+.*$/, '').trim();
       html += `<div class="font-card">
-        <div class="font-check">
-          <input type="checkbox" id="${cbId}" class="font-dl-cb" data-lang="${section.code}"
-                 data-font="${font.name}" data-src="${font.src}" data-url="${font.url}"
-                 ${isGoogle ? '' : 'disabled'}>
-          <label for="${cbId}" class="${isGoogle ? '' : 'disabled'}"
-                 ${isGoogle ? '' : 'title="GitHub에서 직접 다운로드하세요"'}>
-            ${isGoogle ? 'Download' : 'GitHub 직접 다운로드'}
-          </label>
-        </div>
         <div class="font-meta">
           <span class="font-name">${font.name}</span>
           <div class="font-tags"><span class="font-tag free">Free Commercial</span>${tags}</div>
@@ -719,91 +657,10 @@ $('#fontSizeSlider').addEventListener('input', () => {
 });
 $$('.view-btn').forEach(b => b.addEventListener('click', () => setView(b.dataset.view)));
 
-// ═══════════════════════════════════════
-// DOWNLOAD SELECTION
-// ═══════════════════════════════════════
-function getSelectedFonts() {
-  const checked = [...$$('.font-dl-cb:checked')];
-  const googleFonts = new Set();
-  const githubFonts = [];
-  checked.forEach(cb => {
-    if (cb.dataset.src === 'Google Fonts') {
-      // Strip CJK suffixes: "ZCOOL KuaiLe 站酷快乐体" → "ZCOOL KuaiLe"
-      const clean = cb.dataset.font.replace(/\s+[\u2e80-\u9fff\u3040-\u30ff\uff00-\uffef]+.*$/, '').trim();
-      googleFonts.add(clean);
-    } else {
-      githubFonts.push({ name: cb.dataset.font, url: cb.dataset.url });
-    }
-  });
-  return { google: [...googleFonts], github: githubFonts, totalChecked: checked.length };
-}
-
-function updateDownloadBar() {
-  const { google, github, totalChecked } = getSelectedFonts();
-  const bar = $('#downloadBar');
-  const unique = google.length + github.length;
-  $('#dlCount').textContent = `${totalChecked} selected`;
-  $('#dlUnique').textContent = unique !== totalChecked ? `(${unique} unique fonts)` : '';
-  bar.classList.toggle('visible', totalChecked > 0);
-}
-
-function syncSelectAll(langCode) {
-  const allCb = document.getElementById(`selAll_${langCode}`);
-  if (!allCb) return;
-  const langCbs = [...$$(`.font-dl-cb[data-lang="${langCode}"]:not(:disabled)`)];
-  const allChecked = langCbs.length > 0 && langCbs.every(cb => cb.checked);
-  const someChecked = langCbs.some(cb => cb.checked);
-  allCb.checked = allChecked;
-  allCb.indeterminate = someChecked && !allChecked;
-}
-
-function bindDownloadEvents() {
-  // Individual checkboxes
-  document.addEventListener('change', e => {
-    if (e.target.classList.contains('font-dl-cb')) {
-      syncSelectAll(e.target.dataset.lang);
-      updateDownloadBar();
-    }
-    if (e.target.classList.contains('sel-all-cb')) {
-      const lang = e.target.dataset.lang;
-      const checked = e.target.checked;
-      $$(`.font-dl-cb[data-lang="${lang}"]:not(:disabled)`).forEach(cb => { cb.checked = checked; });
-      updateDownloadBar();
-    }
-  });
-
-  // Download button
-  $('#btnDownload').addEventListener('click', () => {
-    const { google, github } = getSelectedFonts();
-    if (google.length > 0) {
-      if (google.length === 1) {
-        const url = `https://fonts.google.com/download?family=${encodeURIComponent(google[0])}`;
-        window.open(url, '_blank');
-      } else {
-        // Google Fonts share page: selection.family=Font1|Font2|Font3
-        const joined = google.join('|');
-        const shareUrl = `https://fonts.google.com/share?selection.family=${encodeURIComponent(joined)}`;
-        window.open(shareUrl, '_blank');
-      }
-    }
-    if (github.length > 0) {
-      github.forEach(f => window.open(f.url, '_blank'));
-    }
-  });
-
-  // Clear button
-  $('#btnClearSel').addEventListener('click', () => {
-    $$('.font-dl-cb').forEach(cb => { cb.checked = false; });
-    $$('.sel-all-cb').forEach(cb => { cb.checked = false; cb.indeterminate = false; });
-    updateDownloadBar();
-  });
-}
-
 // Init
 buildNav();
 buildSections();
 buildCompareView();
-bindDownloadEvents();
 </script>
 
 </body>
