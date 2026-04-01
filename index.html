@@ -776,15 +776,13 @@ function bindDownloadEvents() {
   $('#btnDownload').addEventListener('click', () => {
     const { google, github } = getSelectedFonts();
     if (google.length > 0) {
-      // Google Fonts download API: one zip per family
-      // For multiple fonts, open selection page or download individually
       if (google.length === 1) {
         const url = `https://fonts.google.com/download?family=${encodeURIComponent(google[0])}`;
         window.open(url, '_blank');
       } else {
-        // Use Google Fonts share link for batch selection
-        const families = google.map(f => 'family=' + encodeURIComponent(f)).join('&');
-        const shareUrl = `https://fonts.google.com/share?${families}`;
+        // Google Fonts share page: selection.family=Font1|Font2|Font3
+        const joined = google.join('|');
+        const shareUrl = `https://fonts.google.com/share?selection.family=${encodeURIComponent(joined)}`;
         window.open(shareUrl, '_blank');
       }
     }
